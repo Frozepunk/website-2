@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Decrypted Message - Cyber Core Club</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="container">
+    <!-- <h1>Decrypted Message</h1> -->
+    <div class="card">
+      <p id="decryptedText" style="opacity: 0; animation: fadeIn 1s ease-in-out forwards;">Your decrypted message will appear here</p>
+      <!-- <a href="index.html" class="backBtn">Go Back</a> -->
+    </div>
+  </div>
+
+  <script>
+    // Caesar Cipher Decryption function
+    function caesarDecrypt(encryptedText, key = 3) {
+      return encryptedText.split('').map(char => {
+        if (char.match(/[a-z]/i)) {
+          // Get the character code and adjust for case
+          const code = char.charCodeAt(0);
+          const base = char === char.toUpperCase() ? 65 : 97;
+          
+          // Decrypt by subtracting the key
+          return String.fromCharCode(((code - base - key + 26) % 26) + base);
+        }
+        return char;
+      }).join('');
+    }
+
+    // Get the encrypted text from the URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const encryptedText = urlParams.get('encryptedText');
+
+    if (encryptedText) {
+      const decryptedMessage = caesarDecrypt(encryptedText);
+      
+      if (decryptedMessage) {
+        document.getElementById('decryptedText').textContent = decryptedMessage;
+      } else {
+        document.getElementById('decryptedText').textContent = 'Failed to decrypt the message.';
+      }
+    } else {
+      document.getElementById('decryptedText').textContent = 'No encrypted text provided.';
+    }
+  </script>
+</body>
+</html>

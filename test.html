@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Caesar Cipher</title>
+</head>
+<body>
+    <script>
+        // Caesar Cipher Decryption function
+        function caesarDecrypt(encryptedText, key = 3) {
+            return encryptedText.split('').map(char => {
+                if (char.match(/[a-z]/i)) {
+                    const code = char.charCodeAt(0);
+                    const base = char === char.toUpperCase() ? 65 : 97;
+                    return String.fromCharCode(((code - base - key + 26) % 26) + base);
+                }
+                return char;
+            }).join('');
+        }
+
+        // Test the decryption
+        const encryptedText = "ZHOFNH WR FBEHU FRUH FLY";
+        const decryptedText = caesarDecrypt(encryptedText);
+        console.log("Encrypted: ", encryptedText);
+        console.log("Decrypted: ", decryptedText);
+    </script>
+</body>
+</html>
